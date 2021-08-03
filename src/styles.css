@@ -1,1 +1,328 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/dist/css/bootstrap.css";
+@import "~bootstrap-icons/font/bootstrap-icons.css";
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.mat-expansion-panel-header.mat-expanded:focus, .mat-expansion-panel-header.mat-expanded:hover{
+    background-color: #c5efff !important;
+    /* padding: 20px 23px 0px 23px !important; */
+    padding: 35px 20px 15px 15px;
+}
+.mat-expanded:focus + .mat-expansion-indicator:focus::after,
+.mat-expanded:hover + .mat-expansion-indicator:focus::after{
+    margin-top: 6px !important;
+}
+.mat-expansion-panel-header.mat-expanded {
+    height: 48px !important;
+}
+.mat-expansion-panel-header{
+ padding: 35px 20px 15px 15px !important;
+}
+.mat-expansion-panel:not(.mat-expanded).mat-expansion-indicator::after{
+    margin-top: -18px !important;
+}
+.mat-expansion-panel .mat-expansion-panel-header.cdk-keyboard-focused:not([aria-disabled=true]),
+.mat-expansion-panel .mat-expansion-panel-header.cdk-program-focused:not([aria-disabled=true]),
+.mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:hover:not([aria-disabled=true]){
+    padding: 35px 20px 15px 15px !important;
+}
+
+.mat-accordion .mat-expansion-panel:not(.mat-expanded):nth-child(even)
+{
+    background-color: #f1eded !important;
+
+}
+
+.example-section .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background,
+.example-section .mat-checkbox-checked.mat-accent .mat-checkbox-background{
+  background-color: #1358bf !important;
+}
+
+.example-section .mat-checkbox-checked:not(.mat-checkbox-disabled).mat-accent .mat-ripple-element,
+.example-section .mat-checkbox:active:not(.mat-checkbox-disabled).mat-accent .mat-ripple-element{
+  background: #1358bf !important;
+}
+.modal-content{
+padding: 20px;
+}
+
+.table thead th {
+    vertical-align: middle !important;
+}
+.table tbody td {
+    vertical-align: middle !important;
+}
+.showInactive label{
+    margin-bottom: -17px !important;
+}
+.showInactive .mat-checkbox-label{
+font-size: 14px !important;
+}
+.showInactive .mat-checkbox-inner-container{
+    width: 14px !important;
+    height: 14px !important;
+}
+
+[class^="bi-"]::before, [class*=" bi-"]::before{
+    vertical-align: middle !important;
+}
+.fixed label{
+    margin-bottom: unset !important;
+  }
+  .delete:hover{
+    color: black !important;
+    background-color:unset !important;
+    border: none !important;;
+  }
+  .delete{
+    color: #dc3545;
+    border: none !important;
+}
+
+.mat-expansion-panel-body {
+    padding: 16px 24px 16px 24px !important;
+}
+.iconButton.mat-menu-panel{
+    min-height: unset !important;
+  }
+
+  .iconButton.mat-menu-content:not(:empty) {
+    padding-top: unset !important;
+    padding-bottom: unset !important;
+    display: flex !important;
+  }
+  .content-wrap {
+    display: flex;
+    height: 100%;
+}
+.mat-toolbar {
+    background: #3f51b5 !important;
+    color: white !important;
+  }
+  .MenuIcons button.mat-menu-item {
+    width: unset !important;
+    padding: 0 !important;
+}
+
+
+  /* .flex-spacer {
+      flex: 1 1 auto;
+  } */
+  .mt-30{
+    margin-top: 30px;
+  }
+  .mat-list-base {
+    padding-top: 50px !important;
+}
+.mat-drawer-inner-container {
+    overflow: hidden !important;
+}
+
+.mat-drawer-content {
+  overflow: hidden !important;
+}
+/* .mat-drawer-inner-container {
+  width: 90% !important;
+}  */
+
+.mat-list-base {
+  padding-top: 65px !important;
+}
+.MenuIcons .mat-menu-item .mat-icon {
+  margin-right: 2px !important;
+  vertical-align: initial !important;
+}
+
+.mat-menu-item:hover:not([disabled]), .mat-menu-item.cdk-program-focused:not([disabled]),
+.mat-menu-item.cdk-keyboard-focused:not([disabled]), .mat-menu-item-highlighted:not([disabled]) {
+  background: unset !important;
+}
+
+
+.mat-list-option:hover, .mat-list-option:focus, .mat-nav-list .mat-list-item:hover,
+.mat-nav-list .mat-list-item:focus, .mat-action-list .mat-list-item:hover, .mat-action-list .mat-list-item:focus
+{
+  background: unset !important;
+
+}
+
+.mat-focus-indicator .mat-menu-item{
+  background: unset !important;
+
+}
+
+.mat-list-base .mat-list-item .mat-list-icon, .mat-list-base .mat-list-option .mat-list-icon{
+  padding: 0 !important;
+}
+
+.example-container {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.example-is-mobile .example-toolbar {
+  position: fixed;
+  /* Make sure the toolbar will stay on top of the content as it scrolls past. */
+  z-index: 2;
+}
+
+h1.example-app-name {
+  margin-left: 8px;
+}
+
+.example-sidenav-container {
+  /* When the sidenav is not fixed, stretch the sidenav container to fill the available space. This
+     causes `<mat-sidenav-content>` to act as our scrolling element for desktop layouts. */
+  flex: 1;
+}
+
+.example-is-mobile .example-sidenav-container {
+  /* When the sidenav is fixed, don't constrain the height of the sidenav container. This allows the
+     `<body>` to be our scrolling element for mobile layouts. */
+  flex: 1 0 auto;
+}
+/* .desktopDisplay{
+  visibility: visible;
+}
+.mobileDisplay{
+visibility: hidden;
+} */
+
+/* @media (max-width: 768px){
+
+  .desktopDisplay{
+    visibility: hidden;
+  }
+  .mobileDisplay{
+visibility: visible;
+  }
+} */
+.equipment .form-control{
+  margin: -7px 10px -7px 10px;
+  width: 85% !important;
+}
+.equipment{
+  display: flex;
+}
+/* .active-list-item {
+  color: #3F51B5 !important;
+} */
+
+#login-btn{
+  background-color: #232a44;
+    border-color: #232a44;
+}
+
+#login-btn:hover{
+ background-color: #232a44e3;
+ border-color: #232a44e3;
+}
+
+#login-btn:focus, #login-btn.focus {
+  box-shadow: 0 0 0 0.2rem #d4dae061 !important;
+}
+
+.card-header {
+  background-color: unset !important;
+}
+.error{
+  color: red;
+}
+.was-validated .form-control:invalid, .form-control.is-invalid {
+  background-image: unset !important;
+  padding-right: unset !important;
+}
+
+.desktopDisplay{
+  display: block;
+}
+.mobileDisplay{
+  display: none !important;
+}
+
+.highlight{
+  background: rgb(4 4 4 / 15%);
+}
+.mat-list-item .mat-list-item-content:hover{
+  background: rgb(4 4 4 / 15%);
+}
+.mat-list-base .mat-list-item .mat-list-item-content, .mat-list-base .mat-list-option .mat-list-item-content {
+  padding: unset !important;
+}
+@media (max-width: 600px) {
+  .mobileDisplay{
+    display: block !important;
+  }
+  .desktopDisplay{
+    display: none !important;
+  }
+  .mat-drawer-inner-container {
+    margin-top: 20px;
+}
+.appName {
+  margin-left: 10px !important;
+}
+/* .mat-drawer-container {
+  position: unset !important;
+} */
+.auth-form-btn {
+  width: 40% !important;
+}
+.register{
+  padding-top: unset !important;
+  padding-left: unset !important;
+}
+.mat-list-base .mat-list-item .mat-list-item-content, .mat-list-base .mat-list-option .mat-list-item-content {
+  padding: 0 16px !important;
+}
+}
+
+/* login and register page */
+
+.errorshow {
+  padding: 5px 8px;
+  text-align: center;
+  font-size: 14px;
+  color: #721c24;
+  background-color: #fcc0c5;
+  border-color: #f5c6cb;
+  border-radius: 0.25rem;
+}
+
+/* .iti input, .iti input[type=text], .iti input[type=tel] {
+  margin-right: 160px !important;
+} */
+.iti{
+  display: block !important;
+}
+.iti__flag-container{
+  background-color: #e9ecef;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+}
+
+.invalid-feedback{display:block;}
+
+.multiselect-dropdown {
+  position: absolute !important;
+  width: 91% !important;
+}
+.multiselect-dropdown .dropdown-btn {
+  padding: 7.5px 12px !important;
+}
+
+.multiselect-dropdown .dropdown-btn .selected-item {
+  max-width: unset !important;
+}
+#adminTable tr.mat-row, tr.mat-footer-row {
+  height: 60px !important;
+}

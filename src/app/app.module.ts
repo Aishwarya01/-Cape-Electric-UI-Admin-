@@ -21,6 +21,20 @@ import { AdminLoginComponent } from './admin-login/admin-login.component';
 import { AdminRegisterComponent } from './admin-register/admin-register.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { MaterialModule } from './material/material.module';
+import { MsalInterceptor, MsalInterceptorConfiguration, MsalModule, MsalService, MSAL_INSTANCE, MSAL_INTERCEPTOR_CONFIG } from '@azure/msal-angular';
+import { InteractionType, IPublicClientApplication, PublicClientApplication } from '@azure/msal-browser';
+import { AdminLoginPortalComponent } from './admin-login-portal/admin-login-portal.component';
+
+export function MSALInstanceFactory(): IPublicClientApplication{
+  return new PublicClientApplication({
+    auth: {
+      clientId: 'a42b32f6-213f-47cc-9f59-374d311623cd',
+      redirectUri: 'http://localhost:4200',
+      authority: 'https://login.microsoftonline.com/7046acc7-d86a-47fe-ba66-03e831fcfdbe/'
+
+    }
+  })
+}
 
 
 @NgModule({
@@ -29,7 +43,8 @@ import { MaterialModule } from './material/material.module';
     AdminLoginComponent,
     AdminRegisterComponent,
     AdminHomeComponent,
-    UserUpdateComponent
+    UserUpdateComponent,
+    AdminLoginPortalComponent,
 
   ],
   imports: [
@@ -47,11 +62,18 @@ import { MaterialModule } from './material/material.module';
     MatSidenavModule,
     MatIconModule,
     MatListModule,
+    MsalModule,
     MatMenuModule,
     NgxBootstrapIconsModule.pick(allIcons),
     NgMultiSelectDropDownModule.forRoot()
     ],
-  providers: [],
+  providers: [
+    {
+      provide: MSAL_INSTANCE,
+      useFactory: MSALInstanceFactory
+    },
+    MsalService
+  ],
   bootstrap: [AppComponent]
 })
 

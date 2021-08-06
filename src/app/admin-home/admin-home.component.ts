@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { MsalService } from '@azure/msal-angular';
 import { Admin } from '../model/admin';
 import { AdminServiceService } from '../services/admin-service.service';
 import { UserUpdateComponent } from '../user-update/user-update.component';
@@ -25,7 +26,7 @@ export class AdminHomeComponent implements OnInit {
   
 
   constructor(private dialog: MatDialog,
-              private adminService: AdminServiceService) 
+              private adminService: AdminServiceService, private msalService: MsalService) 
               { }
 
   ngOnInit(): void {
@@ -45,16 +46,8 @@ export class AdminHomeComponent implements OnInit {
 
   }
 
-  profileUpdate() {
-
-  }
-
-  changePassword() {
-
-  }
-
   logout() {
-
+    this.msalService.logoutRedirect();
   }
 
   proceed(name: any,companyName: any,registerId: any,permission: any) {

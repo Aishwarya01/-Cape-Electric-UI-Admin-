@@ -22,7 +22,7 @@ export class AdminLoginPortalComponent implements OnInit {
   }
 
   login() {
-    if(this.isUserLoggedIn() == false){
+    
       this.msalService.loginPopup().subscribe((res: AuthenticationResult) => {
         if(res != null && res.account != null){
           this.msalService.instance.setActiveAccount(res.account);
@@ -30,9 +30,7 @@ export class AdminLoginPortalComponent implements OnInit {
         }
         
       })
-    } else {
-      this.msalService.logout();
-    }
+    
     
   }
 

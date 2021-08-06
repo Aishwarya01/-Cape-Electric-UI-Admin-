@@ -40,10 +40,8 @@ export class AdminLoginPortalComponent implements OnInit {
   }
 
   logout() {
-    if(this.isUserLoggedIn() == false){
-      this.msalService.logout();
+      this.msalService.logoutRedirect();
       
-    }
     
   }
 

@@ -27,8 +27,4 @@ export class AdminLoginPortalComponent implements OnInit {
   isUserLoggedIn(): boolean {
     return this.msalService.instance.getActiveAccount != null;
   }
-
-  logout() {
-    this.msalService.logoutRedirect();
-  }
 }

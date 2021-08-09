@@ -4,7 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MsalService } from '@azure/msal-angular';
-import { Admin } from '../model/admin';
+import { AuthenticationResult } from '@azure/msal-browser';
 import { AdminServiceService } from '../services/admin-service.service';
 import { UserUpdateComponent } from '../user-update/user-update.component';
 
@@ -34,18 +34,24 @@ export class AdminHomeComponent implements OnInit {
     private adminService: AdminServiceService,
     private msalService: MsalService
   ) {}
-
+  email: string = '';
   ngOnInit(): void {
-    this.adminService.retrieveAllInspector().subscribe(
-      (data) => {
-        this.admin_dataSource = new MatTableDataSource(data);
-        this.admin_dataSource.paginator = this.adminPaginator;
-        this.admin_dataSource.sort = this.adminSort;
-      },
-      (error) => {
-        console.log('error');
+    this.msalService.loginPopup().subscribe((res: AuthenticationResult) => {
+      if (res != null && res.account != null) {
+        this.msalService.instance.setActiveAccount(res.account);
+        this.email = res.account.username;
+        this.adminService.retrieveAllInspector().subscribe(
+          (data) => {
+            this.admin_dataSource = new MatTableDataSource(data);
+            this.admin_dataSource.paginator = this.adminPaginator;
+            this.admin_dataSource.sort = this.adminSort;
+          },
+          (error) => {
+            console.log('error');
+          }
+        );
       }
-    );
+    });
   }
 
   logout() {

@@ -14,12 +14,13 @@ export class AdminLoginPortalComponent implements OnInit {
   constructor(private msalService: MsalService, private router: Router) {}
 
   ngOnInit(): void {}
-
+  email: string = '';
   login() {
     this.msalService.loginPopup().subscribe((res: AuthenticationResult) => {
       if (res != null && res.account != null) {
+        this.email = res.account.username;
         this.msalService.instance.setActiveAccount(res.account);
-        this.router.navigate(['/admin/home', { email: res.account.username }]);
+        this.router.navigate(['/admin/home']);
       }
     });
   }

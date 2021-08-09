@@ -32,8 +32,6 @@ export class AdminHomeComponent implements OnInit {
   ngOnInit(): void {
     this.adminService.retrieveAllInspector().subscribe(
       (data) => {
-        debugger
-        console.log(data);
         this.admin_dataSource = new MatTableDataSource(data);
         this.admin_dataSource.paginator = this.adminPaginator;
         this.admin_dataSource.sort = this.adminSort;

@@ -36,11 +36,7 @@ export class AdminHomeComponent implements OnInit {
   ) {}
   email: string = '';
   ngOnInit(): void {
-    this.msalService.loginPopup().subscribe((res: AuthenticationResult) => {
-      if (res != null && res.account != null) {
-        this.msalService.instance.setActiveAccount(res.account);
-        this.email = res.account.username;
-        this.adminService.retrieveAllInspector().subscribe(
+    this.adminService.retrieveAllInspector().subscribe(
           (data) => {
             this.admin_dataSource = new MatTableDataSource(data);
             this.admin_dataSource.paginator = this.adminPaginator;
@@ -50,8 +46,7 @@ export class AdminHomeComponent implements OnInit {
             console.log('error');
           }
         );
-      }
-    });
+     
   }
 
   logout() {

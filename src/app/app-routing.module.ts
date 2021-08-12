@@ -6,7 +6,6 @@ import { MaslGuard } from './masl.guard';
 
 const routes: Routes = [
   {path: '', component:AdminLoginPortalComponent,  pathMatch: 'full'},
-  {path: 'admin/login',component:AdminLoginPortalComponent},
   {path: 'admin/home',component:AdminHomeComponent, canActivate: [MaslGuard]}
 ];
 

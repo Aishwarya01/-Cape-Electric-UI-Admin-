@@ -11,6 +11,7 @@
                             <h3 class="login-title">Login To Admin Portal</h3>
                         </div>
                     </div>
+                    <div class="errorshow" *ngIf="validUser">{{validUser}}</div>
                     <div class="card-body">
                        
                             <button class="btn btn-block btn-primary btn-rounded btn-md font-weight-medium auth-form-btn"><i

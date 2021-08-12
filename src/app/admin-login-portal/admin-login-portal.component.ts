@@ -13,7 +13,10 @@ import { MsAdalAngular6Service } from 'microsoft-adal-angular6';
 export class AdminLoginPortalComponent implements OnInit {
   constructor(private msalService: MsalService, private router: Router) {}
 
-  ngOnInit(): void {}
+  validUser: string = '';
+  ngOnInit(): void {
+    this.validUser = '';
+  }
   email: string = '';
   login() {
     this.msalService.loginPopup().subscribe((res: AuthenticationResult) => {
@@ -22,6 +25,9 @@ export class AdminLoginPortalComponent implements OnInit {
         this.msalService.instance.setActiveAccount(res.account);
         this.router.navigate(['/admin/home']);
       }
+    },
+    (error)=> {
+      this.validUser = 'You are unauthorized to access the application. Please contact Cape Electric Admin People'
     });
   }
 

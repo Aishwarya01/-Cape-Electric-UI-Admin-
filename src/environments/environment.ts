@@ -12,7 +12,11 @@ export const environment = {
   clientId: 'a42b32f6-213f-47cc-9f59-374d311623cd', // replace with yours one here
   redirectUri: 'http://localhost:4200', // replace with the yours one here
   postLogoutRedirectUri: 'http://localhost:4200/logout', // replace with yours one here
-  extraQueryParameter: 'nux=1', //(optional)
+  extraQueryParameter: 'nux=1', //(optional),
+  scopes: [
+    'user.read',
+    'directory.accessasuser.all'
+  ]
 };
 
 /*

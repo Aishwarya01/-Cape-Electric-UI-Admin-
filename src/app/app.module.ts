@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -17,19 +17,30 @@ import { UserUpdateComponent } from './user-update/user-update.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AdminHomeComponent } from './admin-home/admin-home.component';
-import { AdminLoginComponent } from './admin-login/admin-login.component';
-import { AdminRegisterComponent } from './admin-register/admin-register.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { MaterialModule } from './material/material.module';
+import { MsalModule, MsalService, MSAL_INSTANCE } from '@azure/msal-angular';
+import { IPublicClientApplication, PublicClientApplication } from '@azure/msal-browser';
+import { AdminLoginPortalComponent } from './admin-login-portal/admin-login-portal.component';
+import { environment } from 'src/environments/environment';
+
+export function MSALInstanceFactory(): IPublicClientApplication{
+  return new PublicClientApplication({
+    auth: {
+      clientId: environment.clientId,
+      redirectUri: environment.redirectUri,
+      authority: environment.authority
+    }
+  })
+}
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    AdminLoginComponent,
-    AdminRegisterComponent,
     AdminHomeComponent,
-    UserUpdateComponent
+    UserUpdateComponent,
+    AdminLoginPortalComponent,
 
   ],
   imports: [
@@ -47,11 +58,18 @@ import { MaterialModule } from './material/material.module';
     MatSidenavModule,
     MatIconModule,
     MatListModule,
+    MsalModule,
     MatMenuModule,
     NgxBootstrapIconsModule.pick(allIcons),
     NgMultiSelectDropDownModule.forRoot()
     ],
-  providers: [],
+  providers: [
+    {
+      provide: MSAL_INSTANCE,
+      useFactory: MSALInstanceFactory
+    },
+    MsalService
+  ],
   bootstrap: [AppComponent]
 })
 

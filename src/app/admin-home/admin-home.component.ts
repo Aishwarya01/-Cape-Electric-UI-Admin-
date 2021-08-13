@@ -3,8 +3,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { ActivatedRoute } from '@angular/router';
 import { MsalService } from '@azure/msal-angular';
-import { AuthenticationResult } from '@azure/msal-browser';
 import { AdminServiceService } from '../services/admin-service.service';
 import { UserUpdateComponent } from '../user-update/user-update.component';
 
@@ -25,16 +25,20 @@ export class AdminHomeComponent implements OnInit {
     'permission',
     'action',
   ];
+  errorMessage: string= '';
   admin_dataSource!: MatTableDataSource<any>;
   @ViewChild('adminPaginator', { static: true }) adminPaginator!: MatPaginator;
   @ViewChild('adminSort', { static: true }) adminSort!: MatSort;
-
+  email: string = '';
   constructor(
     private dialog: MatDialog,
     private adminService: AdminServiceService,
-    private msalService: MsalService
-  ) {}
-  email: string = '';
+    private msalService: MsalService,
+    private router: ActivatedRoute
+  ) {
+    this.email = this.router.snapshot.paramMap.get('email') || '{}';
+  }
+
   ngOnInit(): void {
     this.retrieveInspectorDetails();
   }
@@ -47,7 +51,7 @@ export class AdminHomeComponent implements OnInit {
         this.admin_dataSource.sort = this.adminSort;
       },
       (error) => {
-        console.log('error');
+        this.errorMessage = error.error.message;
       }
     );
   }
@@ -56,10 +60,17 @@ export class AdminHomeComponent implements OnInit {
     this.msalService.logoutRedirect();
   }
 
-  proceed(name: any, companyName: any, registerId: any, permission: any, applicationType: any) {
+  proceed(
+    name: any,
+    companyName: any,
+    registerId: any,
+    permission: any,
+    applicationType: any
+  ) {
     const dialogRef = this.dialog.open(UserUpdateComponent, {
       width: '500px',
     });
+    dialogRef.componentInstance.email = this.email;
     dialogRef.componentInstance.name = name;
     dialogRef.componentInstance.companyName = companyName;
     dialogRef.componentInstance.registerId = registerId;

@@ -23,6 +23,7 @@ export class UserUpdateComponent implements OnInit {
   permission: String = '';
   registerId!: number;
   applicationType: String = '';
+  email: string='';
   arr: any= [];
 
 
@@ -51,7 +52,6 @@ export class UserUpdateComponent implements OnInit {
       applicationType: ['', Validators.required],
       });
       this.register.registerId= this.registerId;
-      debugger
       this.arr=this.applicationType.split(',');
 
       this.dropdownList = this.arr;
@@ -68,10 +68,10 @@ export class UserUpdateComponent implements OnInit {
   }
 
   onItemSelect(item: any) {
-    console.log(item);
+    
   }
   onSelectAll(items: any) {
-    console.log(items);
+    
   }
 
   get f() {
@@ -79,7 +79,8 @@ export class UserUpdateComponent implements OnInit {
   }
 
   onSubmit() {
-    this.register.adminUserName="arunkumar.k@capeindia.net";
+    
+    this.register.adminUserName=this.email;
     if(this.userUpdateForm.value.permission == "No") {
       this.userUpdateForm.controls["cmntBox"].setValidators(Validators.required);
       this.userUpdateForm.controls["cmntBox"].updateValueAndValidity();

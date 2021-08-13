@@ -23,7 +23,7 @@ export class AdminLoginPortalComponent implements OnInit {
       if (res != null && res.account != null) {
         this.email = res.account.username;
         this.msalService.instance.setActiveAccount(res.account);
-        this.router.navigate(['/admin/home']);
+        this.router.navigate(['/admin/home', {email: res.account.username}]);
       }
     },
     (error)=> {

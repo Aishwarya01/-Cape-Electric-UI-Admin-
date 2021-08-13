@@ -1,12 +1,12 @@
 .client-description {
-    width: 455px;
-    height: 150px;
-  }
-  
-  .client-box-description {
-    height: 100px;
-  }
+  width: 455px;
+  height: 150px;
+}
 
-  .mat-radio-button ~ .mat-radio-button {
-    margin-left: 16px;
-  }
+.client-box-description {
+  height: 100px;
+}
+
+.mat-radio-button ~ .mat-radio-button {
+  margin-left: 16px;
+}

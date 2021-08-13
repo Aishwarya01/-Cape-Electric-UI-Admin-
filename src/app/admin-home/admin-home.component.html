@@ -72,7 +72,7 @@
                 <ng-container matColumnDef="action">
                   <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
                   <td mat-cell *matCellDef="let element">
-                    <button class="btn btn-info" (click)="proceed(element.name,element.companyName,element.registerId,element.permission)">Approve/Reject</button> 
+                    <button class="btn btn-info" (click)="proceed(element.name,element.companyName,element.registerId,element.permission, element.applicationType)">Approve/Reject</button> 
                   </td>
                 </ng-container>
 

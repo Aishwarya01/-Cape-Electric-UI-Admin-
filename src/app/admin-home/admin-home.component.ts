@@ -36,24 +36,27 @@ export class AdminHomeComponent implements OnInit {
   ) {}
   email: string = '';
   ngOnInit(): void {
+    this.retrieveInspectorDetails();
+  }
+
+  private retrieveInspectorDetails() {
     this.adminService.retrieveAllInspector().subscribe(
-          (data) => {
-            this.admin_dataSource = new MatTableDataSource(data);
-            this.admin_dataSource.paginator = this.adminPaginator;
-            this.admin_dataSource.sort = this.adminSort;
-          },
-          (error) => {
-            console.log('error');
-          }
-        );
-     
+      (data) => {
+        this.admin_dataSource = new MatTableDataSource(data);
+        this.admin_dataSource.paginator = this.adminPaginator;
+        this.admin_dataSource.sort = this.adminSort;
+      },
+      (error) => {
+        console.log('error');
+      }
+    );
   }
 
   logout() {
     this.msalService.logoutRedirect();
   }
 
-  proceed(name: any, companyName: any, registerId: any, permission: any) {
+  proceed(name: any, companyName: any, registerId: any, permission: any, applicationType: any) {
     const dialogRef = this.dialog.open(UserUpdateComponent, {
       width: '500px',
     });
@@ -61,7 +64,9 @@ export class AdminHomeComponent implements OnInit {
     dialogRef.componentInstance.companyName = companyName;
     dialogRef.componentInstance.registerId = registerId;
     dialogRef.componentInstance.permission = permission;
-
-    dialogRef.afterClosed().subscribe((result) => {});
+    dialogRef.componentInstance.applicationType = applicationType;
+    dialogRef.afterClosed().subscribe((result) => {
+      this.retrieveInspectorDetails();
+    });
   }
 }

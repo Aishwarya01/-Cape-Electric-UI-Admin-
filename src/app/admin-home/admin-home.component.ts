@@ -20,6 +20,7 @@ export class AdminHomeComponent implements OnInit {
     'department',
     'designation',
     'applicationType',
+    'userRole',
     'address',
     'contactNumber',
     'permission',

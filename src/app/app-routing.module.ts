@@ -5,8 +5,9 @@ import { AdminLoginPortalComponent } from './admin-login-portal/admin-login-port
 import { MaslGuard } from './masl.guard';
 
 const routes: Routes = [
-  {path: '', component:AdminLoginPortalComponent,  pathMatch: 'full'},
-  {path: 'admin/home',component:AdminHomeComponent, canActivate: [MaslGuard]}
+  {path: '', redirectTo: "/admin", pathMatch: 'full' },
+  {path: 'admin', component:AdminLoginPortalComponent,  pathMatch: 'full'},
+  {path: 'adminHome',component:AdminHomeComponent, canActivate: [MaslGuard]}
 ];
 
 @NgModule({

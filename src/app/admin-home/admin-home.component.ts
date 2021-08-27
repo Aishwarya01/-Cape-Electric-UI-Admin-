@@ -20,13 +20,13 @@ export class AdminHomeComponent implements OnInit {
     'department',
     'designation',
     'applicationType',
-    'userRole',
     'address',
     'contactNumber',
     'permission',
     'action',
   ];
   errorMessage: string= '';
+  inspectorArr: any = [];
   admin_dataSource!: MatTableDataSource<any>;
   @ViewChild('adminPaginator', { static: true }) adminPaginator!: MatPaginator;
   @ViewChild('adminSort', { static: true }) adminSort!: MatSort;
@@ -47,7 +47,13 @@ export class AdminHomeComponent implements OnInit {
   private retrieveInspectorDetails() {
     this.adminService.retrieveAllInspector().subscribe(
       (data) => {
-        this.admin_dataSource = new MatTableDataSource(data);
+        this.inspectorArr = [];
+        for(let arr of data) {
+          if(arr.role == "Inspector") {
+            this.inspectorArr.push(arr);
+          }
+        }
+        this.admin_dataSource = new MatTableDataSource(this.inspectorArr);
         this.admin_dataSource.paginator = this.adminPaginator;
         this.admin_dataSource.sort = this.adminSort;
       },
@@ -66,7 +72,8 @@ export class AdminHomeComponent implements OnInit {
     companyName: any,
     registerId: any,
     permission: any,
-    applicationType: any
+    applicationType: any,
+    role: any
   ) {
     const dialogRef = this.dialog.open(UserUpdateComponent, {
       width: '500px',
@@ -77,6 +84,8 @@ export class AdminHomeComponent implements OnInit {
     dialogRef.componentInstance.registerId = registerId;
     dialogRef.componentInstance.permission = permission;
     dialogRef.componentInstance.applicationType = applicationType;
+    dialogRef.componentInstance.role = role;
+
     dialogRef.afterClosed().subscribe((result) => {
       this.retrieveInspectorDetails();
     });

@@ -46,9 +46,17 @@
                 
     </div>
 
-    
-
     <div>
+        <div style="margin-top: 15px;">
+            <label>User Type:</label>
+            <select formControlName="userType" [(ngModel)]="userValue"  style="width: 156px; margin-left: 8px;" >
+                <option value="Inspector" [selected]="f.userType?.value=== userValue">Inspector</option>
+                <option value="Viewer" [disabled]="isEnabled">Viewer</option>
+            </select>
+            <!-- <label>User Type: </label>
+            <input type="text" formControlName="userType" style="margin-left: 8px;" readonly value="{{userValue}}" [(ngModel)]="userValue"> -->
+        </div>
+
         <mat-form-field class="client-description">
             <mat-label><h3>Comment (If rejected add comment here)</h3></mat-label>
             <textarea matInput class="client-box-description" formControlName="cmntBox" maxlength="100" placeholder="Ex. Add comment if rejected..." [(ngModel)]="register.comment" [ngClass]="{ 'is-invalid': submitted && f.cmntBox.errors }"></textarea>
@@ -59,6 +67,5 @@
     </div>
     
     <button (click)="onSubmit()" class="btn btn-info" style="margin: 0 auto;display: block;;">Submit</button>
-
 
 </form>

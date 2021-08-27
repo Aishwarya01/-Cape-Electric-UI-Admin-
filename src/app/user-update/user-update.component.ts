@@ -14,7 +14,8 @@ export class UserUpdateComponent implements OnInit {
   userUpdateForm = new FormGroup({
     cmntBox: new FormControl(''),
     permission: new FormControl(''),
-    applicationType: new FormControl('')
+    applicationType: new FormControl(''),
+    userType: new FormControl('')
   });
 
   @Input()
@@ -23,6 +24,7 @@ export class UserUpdateComponent implements OnInit {
   permission: String = '';
   registerId!: number;
   applicationType: String = '';
+  role: String = '';
   email: string='';
   arr: any= [];
 
@@ -35,7 +37,8 @@ export class UserUpdateComponent implements OnInit {
 
   applicationTypeData: String = '';
   submitted = false;
-
+  userValue :String = '';
+  isEnabled: boolean = true;
 
 
   register = new Register
@@ -43,15 +46,20 @@ export class UserUpdateComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private inspectorService: InspectorregisterService,
               public dialog: MatDialog,
-    ) { }
+    ) { 
+
+    }
 
   ngOnInit(): void {
     this.userUpdateForm = this.formBuilder.group({
       cmntBox: [''],
       permission: ['', Validators.required],
       applicationType: ['', Validators.required],
+      userType: [''],
       });
       this.register.registerId= this.registerId;
+      this.userValue = this.role;
+
       this.arr=this.applicationType.split(',');
 
       this.dropdownList = this.arr;
@@ -105,6 +113,7 @@ export class UserUpdateComponent implements OnInit {
     this.register.applicationType = this.applicationTypeData;
     this.applicationTypeData = "";
 
+    this.register.role = this.userUpdateForm.value.userType;
 
     this.inspectorService.updateInspector(this.register).subscribe(
       (data) => {

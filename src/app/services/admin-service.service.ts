@@ -15,6 +15,6 @@ export class AdminServiceService {
   }
 
   public retrieveAllInspector(): Observable<any>{
-    return this.http.get<Admin>(this.apiUrl+'/retrieveAllRegistration')
+    return this.http.get<Admin>(this.apiUrl)
   }
 }

@@ -49,7 +49,7 @@ export class AdminHomeComponent implements OnInit {
       (data) => {
         this.inspectorArr = [];
         for(let arr of data) {
-          if(arr.role == "Inspector") {
+          if(arr.role == "Inspector" || arr.role == "INSPECTOR") {
             this.inspectorArr.push(arr);
           }
         }

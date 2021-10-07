@@ -27,6 +27,10 @@ export class AdminHomeComponent implements OnInit {
   ];
   errorMessage: string= '';
   inspectorArr: any = [];
+  notAuthorizedArray: any = [];
+  approvedArray: any = [];
+  rejectedArray: any = [];
+  permissionList: any = ['Not Authorized', 'Approved', 'Rejected'];
   admin_dataSource!: MatTableDataSource<any>;
   @ViewChild('adminPaginator', { static: true }) adminPaginator!: MatPaginator;
   @ViewChild('adminSort', { static: true }) adminSort!: MatSort;
@@ -42,6 +46,45 @@ export class AdminHomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.retrieveInspectorDetails();
+  }
+
+  changePermission(e: any) {
+    this.notAuthorizedArray = [];
+    this.approvedArray = [];
+    this.rejectedArray = [];
+    if(e.target.value == 'Not Authorized') {
+      for(let a of this.inspectorArr) {
+        if(a.permission == 'NOT_AUTHORIZED') {
+          this.notAuthorizedArray.push(a);
+        }
+      }
+      this.updateTable(this.notAuthorizedArray);
+    }
+    else if(e.target.value == 'Approved') {
+      for(let b of this.inspectorArr) {
+        if(b.permission == 'Yes') {
+          this.approvedArray.push(b);
+        }
+      }
+      this.updateTable(this.approvedArray);
+    }
+    else if(e.target.value == 'Rejected') {
+      for(let c of this.inspectorArr) {
+        if(c.permission == 'No') {
+          this.rejectedArray.push(c);
+        }
+      }
+      this.updateTable(this.rejectedArray);
+    }
+    else {
+      this.updateTable(this.inspectorArr);
+    }
+  }
+
+  updateTable(value: any) {
+    this.admin_dataSource = new MatTableDataSource(value);
+    this.admin_dataSource.paginator = this.adminPaginator;
+    this.admin_dataSource.sort = this.adminSort;
   }
 
   private retrieveInspectorDetails() {
@@ -62,6 +105,8 @@ export class AdminHomeComponent implements OnInit {
       }
     );
   }
+
+  
 
   logout() {
     this.msalService.logoutRedirect();

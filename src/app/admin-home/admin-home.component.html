@@ -14,6 +14,24 @@
   </mat-toolbar>
 
   <div class="card" style="margin: 20px;">
+      
+    <div class="card-header">
+      <div class="search-bar">
+      <div class="row">
+        <div class="col-md-4" style="margin-left: 991px;">
+          <label style="display: table-cell;
+            width: 1px;
+            white-space: nowrap;">Filter By permission:</label>
+          <span class="col-md-5" style="display: table-cell; width: 1000px;
+            padding: 0 4px 0 4px;"><select class="form-control" (change)="changePermission($event)">
+              <option value="0" selected>Select Value</option>
+              <option *ngFor="let list of permissionList">{{list}}</option>
+            </select></span>
+        </div>
+      </div>
+      </div>
+   </div>
+
       <div class="card-body">
         <div *ngIf="errorMessage" class="errorshow">{{errorMessage}}</div>
         <table mat-table [dataSource]="admin_dataSource" class="mat-elevation-z8 table" matSort

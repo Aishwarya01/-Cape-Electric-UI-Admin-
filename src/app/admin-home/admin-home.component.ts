@@ -14,7 +14,31 @@ import { UserUpdateComponent } from '../user-update/user-update.component';
   styleUrls: ['./admin-home.component.css'],
 })
 export class AdminHomeComponent implements OnInit {
-  adminColumns: string[] = [
+  adminNotAuthorizedColumns: string[] = [
+    'name',
+    'companyName',
+    'department',
+    'designation',
+    'applicationType',
+    'address',
+    'contactNumber',
+    'permission',
+    'action',
+  ];
+
+  adminYesColumns: string[] = [
+    'name',
+    'companyName',
+    'department',
+    'designation',
+    'applicationType',
+    'address',
+    'contactNumber',
+    'permission',
+    'action',
+  ];
+
+  adminNoColumns: string[] = [
     'name',
     'companyName',
     'department',
@@ -31,9 +55,17 @@ export class AdminHomeComponent implements OnInit {
   approvedArray: any = [];
   rejectedArray: any = [];
   permissionList: any = ['Not Authorized', 'Approved', 'Rejected'];
-  admin_dataSource!: MatTableDataSource<any>;
-  @ViewChild('adminPaginator', { static: true }) adminPaginator!: MatPaginator;
-  @ViewChild('adminSort', { static: true }) adminSort!: MatSort;
+  admin_NotAuthorized_dataSource!: MatTableDataSource<any>;
+  @ViewChild('adminPaginator', { static: true }) adminNotAuthorizedPaginator!: MatPaginator;
+  @ViewChild('adminNotAuthorizedSort', { static: true }) adminNotAuthorizedSort!: MatSort;
+
+  admin_Yes_dataSource!: MatTableDataSource<any>;
+  @ViewChild('adminYesPaginator', { static: true }) adminYesPaginator!: MatPaginator;
+  @ViewChild('adminYesSort', { static: true }) adminYesSort!: MatSort;
+
+  admin_No_dataSource!: MatTableDataSource<any>;
+  @ViewChild('adminNoPaginator', { static: true }) adminNoPaginator!: MatPaginator;
+  @ViewChild('adminNoSort', { static: true }) adminNoSort!: MatSort;
   email: string = '';
   constructor(
     private dialog: MatDialog,
@@ -48,44 +80,46 @@ export class AdminHomeComponent implements OnInit {
     this.retrieveInspectorDetails();
   }
 
-  changePermission(e: any) {
-    this.notAuthorizedArray = [];
-    this.approvedArray = [];
-    this.rejectedArray = [];
-    if(e.target.value == 'Not Authorized') {
-      for(let a of this.inspectorArr) {
-        if(a.permission == 'NOT_AUTHORIZED') {
-          this.notAuthorizedArray.push(a);
-        }
-      }
-      this.updateTable(this.notAuthorizedArray);
-    }
-    else if(e.target.value == 'Approved') {
-      for(let b of this.inspectorArr) {
-        if(b.permission == 'Yes') {
-          this.approvedArray.push(b);
-        }
-      }
-      this.updateTable(this.approvedArray);
-    }
-    else if(e.target.value == 'Rejected') {
-      for(let c of this.inspectorArr) {
-        if(c.permission == 'No') {
-          this.rejectedArray.push(c);
-        }
-      }
-      this.updateTable(this.rejectedArray);
-    }
-    else {
-      this.updateTable(this.inspectorArr);
-    }
-  }
 
-  updateTable(value: any) {
-    this.admin_dataSource = new MatTableDataSource(value);
-    this.admin_dataSource.paginator = this.adminPaginator;
-    this.admin_dataSource.sort = this.adminSort;
-  }
+  // for select change permissions
+  // changePermission(e: any) {
+  //   this.notAuthorizedArray = [];
+  //   this.approvedArray = [];
+  //   this.rejectedArray = [];
+  //   if(e.target.value == 'Not Authorized') {
+  //     for(let a of this.inspectorArr) {
+  //       if(a.permission == 'NOT_AUTHORIZED') {
+  //         this.notAuthorizedArray.push(a);
+  //       }
+  //     }
+  //     this.updateTable(this.notAuthorizedArray);
+  //   }
+  //   else if(e.target.value == 'Approved') {
+  //     for(let b of this.inspectorArr) {
+  //       if(b.permission == 'Yes') {
+  //         this.approvedArray.push(b);
+  //       }
+  //     }
+  //     this.updateTable(this.approvedArray);
+  //   }
+  //   else if(e.target.value == 'Rejected') {
+  //     for(let c of this.inspectorArr) {
+  //       if(c.permission == 'No') {
+  //         this.rejectedArray.push(c);
+  //       }
+  //     }
+  //     this.updateTable(this.rejectedArray);
+  //   }
+  //   else {
+  //     this.updateTable(this.inspectorArr);
+  //   }
+  // }
+
+  // updateTable(value: any) {
+  //   this.admin_dataSource = new MatTableDataSource(value);
+  //   this.admin_dataSource.paginator = this.adminPaginator;
+  //   this.admin_dataSource.sort = this.adminSort;
+  // }
 
   private retrieveInspectorDetails() {
     this.adminService.retrieveAllInspector().subscribe(
@@ -96,14 +130,47 @@ export class AdminHomeComponent implements OnInit {
             this.inspectorArr.push(arr);
           }
         }
-        this.admin_dataSource = new MatTableDataSource(this.inspectorArr);
-        this.admin_dataSource.paginator = this.adminPaginator;
-        this.admin_dataSource.sort = this.adminSort;
+        this.loadData();
+        // this.admin_dataSource = new MatTableDataSource(this.inspectorArr);
+        // this.admin_dataSource.paginator = this.adminPaginator;
+        // this.admin_dataSource.sort = this.adminSort;
       },
       (error) => {
         this.errorMessage = error.error.message;
       }
     );
+  }
+
+  private loadData() {
+    this.notAuthorizedArray = [];
+    this.approvedArray = [];
+    this.rejectedArray = [];
+    for(let i of this.inspectorArr) {
+      if(i.permission == 'NOT_AUTHORIZED') {
+        this.notAuthorizedArray.push(i);
+      }
+
+      if(i.permission == 'Yes') {
+        this.approvedArray.push(i);
+      }
+
+      if(i.permission == 'No') {
+          this.rejectedArray.push(i);
+      }
+    }
+    
+    this.admin_NotAuthorized_dataSource = new MatTableDataSource(this.notAuthorizedArray);
+    this.admin_NotAuthorized_dataSource.paginator = this.adminNotAuthorizedPaginator;
+    this.admin_NotAuthorized_dataSource.sort = this.adminNotAuthorizedSort;
+
+    this.admin_Yes_dataSource = new MatTableDataSource(this.approvedArray);
+    this.admin_Yes_dataSource.paginator = this.adminYesPaginator;
+    this.admin_Yes_dataSource.sort = this.adminYesSort;
+
+    this.admin_No_dataSource = new MatTableDataSource(this.rejectedArray);
+    this.admin_No_dataSource.paginator = this.adminNoPaginator;
+    this.admin_No_dataSource.sort = this.adminNoSort;
+
   }
 
   

@@ -56,7 +56,7 @@ export class AdminHomeComponent implements OnInit {
   rejectedArray: any = [];
   permissionList: any = ['Not Authorized', 'Approved', 'Rejected'];
   admin_NotAuthorized_dataSource!: MatTableDataSource<any>;
-  @ViewChild('adminPaginator', { static: true }) adminNotAuthorizedPaginator!: MatPaginator;
+  @ViewChild('adminNotAuthorizedPaginator', { static: true }) adminNotAuthorizedPaginator!: MatPaginator;
   @ViewChild('adminNotAuthorizedSort', { static: true }) adminNotAuthorizedSort!: MatSort;
 
   admin_Yes_dataSource!: MatTableDataSource<any>;

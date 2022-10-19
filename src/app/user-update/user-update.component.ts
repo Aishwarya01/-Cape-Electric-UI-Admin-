@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
+import { flag } from 'ngx-bootstrap-icons';
 import { Register } from '../model/register';
 import { InspectorregisterService } from '../services/inspectorregister.service';
 
@@ -15,8 +16,8 @@ export class UserUpdateComponent implements OnInit {
     cmntBox: new FormControl(''),
     permission: new FormControl(''),
     applicationType: new FormControl(''),
-    userType: new FormControl('')
-  });
+    userType: new FormControl(''),
+   });
 
   @Input()
   name: String = '';
@@ -40,10 +41,14 @@ export class UserUpdateComponent implements OnInit {
   userValue :String = '';
   isEnabled: boolean = true;
 
-
+  typesOfApplication: string[] = [];
   register = new Register
+  selectedApplication:string[]=[];
+  selectedOptions:any=[]; 
+  selectedOption:any;
+  permissionType:String='No';
 
-  constructor(private formBuilder: FormBuilder,
+   constructor(private formBuilder: FormBuilder,
               private inspectorService: InspectorregisterService,
               public dialog: MatDialog,
     ) { 
@@ -53,28 +58,39 @@ export class UserUpdateComponent implements OnInit {
   ngOnInit(): void {
     this.userUpdateForm = this.formBuilder.group({
       cmntBox: [''],
-      permission: ['', Validators.required],
-      applicationType: ['', Validators.required],
+      permission: [''],
+      applicationType: [''],
       userType: [''],
-      });
+      permissionType:['', Validators.required],
+       });
       this.register.registerId= this.registerId;
       this.userValue = this.role;
 
       this.arr=this.applicationType.split(',');
 
       this.dropdownList = this.arr;
-
-      this.dropdownSettings = {
-        singleSelection: false,
-        idField: 'id',
-        textField: 'code',
-        selectAllText: 'Select All',
-        unSelectAllText: 'UnSelect All',
-        itemsShowLimit: 1,
-        allowSearchFilter: true
-      };
+      this.typesOfApplication = this.arr;
+    
+       if(this.permission != 'No'){
+        this.permissionType = "Yes";
+      }
+        let permissions=this.permission.split(',');
+        for(let application of permissions){
+         
+            if(application.split('-').length !=0){
+              this.selectedApplication.push(application.split('-')[0]);
+              if(application.split('-')[1] == 'U'){
+                this.selectedOptions.push(application.split('-')[0]);
+              }
+            }
+       
+       }
+     
   }
 
+  onNgModelChange(event:any) {
+    this.selectedOption = event;
+  }
   onItemSelect(item: any) {
     
   }
@@ -95,7 +111,8 @@ export class UserUpdateComponent implements OnInit {
     }
     else{
       this.userUpdateForm.controls["cmntBox"].clearValidators();
-      this.userUpdateForm.controls["cmntBox"].updateValueAndValidity();    }
+      this.userUpdateForm.controls["cmntBox"].updateValueAndValidity();    
+    }
 
     this.submitted= true;
 
@@ -104,7 +121,7 @@ export class UserUpdateComponent implements OnInit {
     }
 
 
-    for(let i of this.userUpdateForm.value.applicationType) {
+    for(let i of this.typesOfApplication) {
       if(i != "") {
         this.applicationTypeData += i+",";
       }
@@ -112,7 +129,27 @@ export class UserUpdateComponent implements OnInit {
     this.applicationTypeData = this.applicationTypeData.replace(/,\s*$/, "");
     this.register.applicationType = this.applicationTypeData;
     this.applicationTypeData = "";
-
+    let updatedStatus = ""
+    if(this.permissionType == 'No'){
+      for(let application of this.typesOfApplication){
+        let flag=true;
+        for(let addstatus of this.selectedOption){
+          if(addstatus == application){
+            flag = false;
+            updatedStatus = updatedStatus + addstatus+"-U,"
+          } 
+        }
+        if(flag){
+          updatedStatus = updatedStatus+ application+"-A,"
+        }
+      }
+     
+       this.register.permission = updatedStatus.replace(/,\s*$/, "");
+    }
+    else{
+      this.register.permission = this.permissionType
+    }
+   
     this.register.role = this.userUpdateForm.value.userType;
 
     this.inspectorService.updateInspector(this.register).subscribe(

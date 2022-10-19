@@ -22,7 +22,7 @@ export class AdminHomeComponent implements OnInit {
     'applicationType',
     'address',
     'contactNumber',
-    'permission',
+    // 'permission',
     'action',
   ];
 
@@ -34,7 +34,7 @@ export class AdminHomeComponent implements OnInit {
     'applicationType',
     'address',
     'contactNumber',
-    'permission',
+    // 'permission',
     'action',
   ];
 
@@ -46,7 +46,7 @@ export class AdminHomeComponent implements OnInit {
     'applicationType',
     'address',
     'contactNumber',
-    'permission',
+    // 'permission',
     'action',
   ];
   errorMessage: string= '';
@@ -150,7 +150,12 @@ export class AdminHomeComponent implements OnInit {
         this.notAuthorizedArray.push(i);
       }
 
-      if(i.permission == 'Yes') {
+      if(i.permission.length >2) {
+        // let approvedapplication:any=[];
+        // for(let value of i.permission.split(',')){
+        //        approvedapplication.push(value.split('-')[0]);
+        // }
+        // i.permission = approvedapplication;
         this.approvedArray.push(i);
       }
 

@@ -4,8 +4,8 @@
     <div class="row">
         <div class="col-md-5">
 
-        <mat-radio-group aria-label="Select an option" formControlName="permission" 
-         [(ngModel)]="register.permission" [ngClass]="{ 'is-invalid': submitted && f.permission.errors }">
+        <mat-radio-group aria-label="Select an option" [(ngModel)]="permissionType"   formControlName="permissionType" 
+          [ngClass]="{ 'is-invalid': submitted && f.permissionType.errors }">
             <mat-radio-button value="Yes">Approve</mat-radio-button>
             <mat-radio-button value="No">Reject</mat-radio-button>
 
@@ -13,40 +13,19 @@
                 <div *ngIf="f.permission?.errors?.required">Select either Approve/Reject</div>
             </div>
         </mat-radio-group> 
+        </div>   
         </div>
-
-        <div class="col-md-6">
-            <div class="input-group" style="width: 110%;">
-                <div class="input-group-prepend">
-                    <span class="input-group-text">
-                        <i class="bi bi-card-list"></i>
-                    </span>
-                </div>
-                <ng-multiselect-dropdown
-                    [placeholder]="'Select Application Type'"
-                    [settings]="dropdownSettings"
-                    [data]="dropdownList"
-                    [(ngModel)]="selected"
-                    (onSelect)="onItemSelect($event)"
-                    (onSelectAll)="onSelectAll($event)"
-                    formControlName="applicationType"
-                    dropdownPosition="auto"
-                    [ngClass]="{ 'is-invalid': submitted && f.applicationType.errors}">
-                    
-                </ng-multiselect-dropdown>
-                <!-- <input type="text" formControlName="applicationType" class="form-control" placeholder="Enter your application type" 
-                [ngClass]="{ 'is-invalid': submitted && f.applicationType.errors}" /> -->
-                <div *ngIf="submitted && f.applicationType.errors" class="invalid-feedback">
-                    <div *ngIf="f.applicationType.errors.required">Application type is required</div>
-                </div>
-            </div>
+        <div>
+            <mat-selection-list formControlName="permission"  [(ngModel)]="selectedOptions"  (ngModelChange)="onNgModelChange($event)">
+                <mat-list-option *ngFor="let applicationApprove of typesOfApplication" [value]="applicationApprove">
+                        
+                        <div class="flex-wrap"> {{applicationApprove}}</div>
+               
+                </mat-list-option>
+              </mat-selection-list> 
+                 
         </div>
-          
-          <!-- <label for="applicationType">* Application Type</label> -->
-                
-    </div>
-
-    <div>
+     <div>
         <div style="margin-top: 15px;">
             <label>User Type:</label>
             <select formControlName="userType" [(ngModel)]="userValue"  style="width: 156px; margin-left: 8px;" >
@@ -65,7 +44,10 @@
             </div>
         </mat-form-field>
     </div>
-    
+
+
+
+
     <button (click)="onSubmit()" class="btn btn-info" style="margin: 0 auto;display: block;;">Submit</button>
 
 </form>

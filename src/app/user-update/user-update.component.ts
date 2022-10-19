@@ -130,7 +130,7 @@ export class UserUpdateComponent implements OnInit {
     this.register.applicationType = this.applicationTypeData;
     this.applicationTypeData = "";
     let updatedStatus = ""
-    if(this.permissionType == 'No'){
+    if(this.permissionType != 'No'){
       for(let application of this.typesOfApplication){
         let flag=true;
         for(let addstatus of this.selectedOption){
